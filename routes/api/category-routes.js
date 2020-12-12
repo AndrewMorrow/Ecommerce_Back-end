@@ -39,7 +39,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", (req, res) => {
     /* req.body should look like this...
-    {"category_name": "Name"}
+    {"category_name": "name"}
   */
     // create a new category
     Category.create(req.body)
@@ -53,6 +53,9 @@ router.post("/", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
+    /* req.body should look like this...
+    {"category_name": "name"}
+  */
     // update a category by its `id` value
     Category.update(req.body, {
         where: {
