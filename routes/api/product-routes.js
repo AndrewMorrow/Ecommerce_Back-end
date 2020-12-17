@@ -3,6 +3,7 @@ const { Product, Category, Tag, ProductTag } = require("../../models");
 
 // The `/api/products` endpoint
 
+// route: api/products/
 // get all products
 router.get("/", async (req, res) => {
     // find all products
@@ -17,6 +18,7 @@ router.get("/", async (req, res) => {
     }
 });
 
+// route: api/products/:id
 // get one product
 router.get("/:id", async (req, res) => {
     // find a single product by its `id`
@@ -37,6 +39,7 @@ router.get("/:id", async (req, res) => {
     }
 });
 
+// route: api/products/
 // create new product
 router.post("/", (req, res) => {
     /* req.body should look like this...
@@ -69,6 +72,7 @@ router.post("/", (req, res) => {
         });
 });
 
+// route: api/products/:id
 // update product
 router.put("/:id", (req, res) => {
     // update product data
@@ -111,6 +115,7 @@ router.put("/:id", (req, res) => {
         });
 });
 
+// route: api/products/:id
 router.delete("/:id", async (req, res) => {
     // delete one product by its `id` value
     try {
@@ -125,7 +130,7 @@ router.delete("/:id", async (req, res) => {
             return;
         }
 
-        res.status(200).json({ message: "The product has been deleted." });
+        res.status(200).json(productData);
     } catch (err) {
         res.status(500).json(err);
     }

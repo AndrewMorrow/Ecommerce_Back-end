@@ -1,8 +1,10 @@
 const router = require("express").Router();
+// pulls in the models for use in the routes
 const { Category, Product } = require("../../models");
 
 // The `/api/categories` endpoint
 
+// route: api/categories/
 router.get("/", async (req, res) => {
     // find all categories
     // be sure to include its associated Products
@@ -16,6 +18,7 @@ router.get("/", async (req, res) => {
     }
 });
 
+// route: api/categories/:id
 router.get("/:id", async (req, res) => {
     // find one category by its `id` value
     // be sure to include its associated Products
@@ -37,6 +40,7 @@ router.get("/:id", async (req, res) => {
     }
 });
 
+// route: api/categories/
 router.post("/", (req, res) => {
     /* req.body should look like this...
     {"category_name": "name"}
@@ -52,26 +56,25 @@ router.post("/", (req, res) => {
         });
 });
 
-router.put("/:id", (req, res) => {
+// route: api/categories/:id
+router.put("/:id", async (req, res) => {
     /* req.body should look like this...
     {"category_name": "name"}
   */
     // update a category by its `id` value
-    Category.update(req.body, {
-        where: {
-            id: req.params.id,
-        },
-    })
-        .then((category) => {
-            res.status(200).json({
-                message: "Your category has been updated!",
-            });
-        })
-        .catch((err) => {
-            res.status(400).json(err);
+    try {
+        const categoryData = await Category.update(req.body, {
+            where: {
+                id: req.params.id,
+            },
         });
+        res.status(200).json(categoryData);
+    } catch {
+        res.status(400).json(err);
+    }
 });
 
+// route: api/categories/:id
 router.delete("/:id", async (req, res) => {
     // delete a category by its `id` value
     try {
@@ -88,7 +91,7 @@ router.delete("/:id", async (req, res) => {
             return;
         }
 
-        res.status(200).json({ message: "The category has been deleted." });
+        res.status(200).json(categoryData);
     } catch (err) {
         res.status(500).json(err);
     }
